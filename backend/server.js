@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import { connectDB } from './config/db.js';
 
 import productRoutes from './routes/products.routes.js'
+import { error } from './middleware/error.js';
 
 const app = express()
 connectDB();
@@ -20,15 +21,11 @@ app.use('*', (req, res, next)=>{
     })
 })
 
-app.use((err, req, res, next) => {
-    res.json({
-        message: err || 'something went'
-    })
-})
+app.use(error)
 
 
 
 
 app.listen(process.env.PORT, ()=>{
-    console.log('Server is running');
+    console.log(`Server is running on port ${process.env.PORT}`);
 })
