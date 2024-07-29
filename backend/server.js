@@ -12,6 +12,7 @@ connectDB();
 app.use(bodyParser.json())
 
 app.use('/', productRoutes)
+//thisfsdflkddfsdfdfkls
 
 
 app.use('*', (req, res, next)=>{
