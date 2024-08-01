@@ -4,7 +4,11 @@ import bodyParser from 'body-parser';
 import { connectDB } from './config/db.js';
 
 import productRoutes from './routes/products.routes.js'
+
+import authRoutes from './routes/auth.routes.js'
+
 import { error } from './middleware/error.js';
+
 
 const app = express()
 connectDB();
@@ -13,7 +17,7 @@ connectDB();
 app.use(bodyParser.json())
 
 app.use('/', productRoutes)
-
+app.use('/', authRoutes)
 
 app.use('*', (req, res, next)=>{
     res.json({
@@ -21,8 +25,8 @@ app.use('*', (req, res, next)=>{
     })
 })
 
-app.use(error)
 
+app.use(error)
 
 
 
