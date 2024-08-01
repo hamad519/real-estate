@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import { connectDB } from './config/db.js';
 
 import productRoutes from './routes/products.routes.js'
+import authRoutes from './routes/auth.routes.js'
 
 const app = express()
 connectDB();
@@ -12,13 +13,7 @@ connectDB();
 app.use(bodyParser.json())
 
 app.use('/', productRoutes)
-//thisfsdflkddfsdfdfkls
-//adkakkkdfksdk
-
-
-
-//aasdhkaskdkajskdakjsdkjasjkdjkashdjkhasjkdh
-
+app.use('/', authRoutes)
 
 app.use('*', (req, res, next)=>{
     res.json({
@@ -27,15 +22,12 @@ app.use('*', (req, res, next)=>{
 })
 
 
-//askdhaskdjkjasdjkaksdjkhk
 
 app.use((err, req, res, next) => {
     res.json({
-        message: err || 'something went'
+        message: err 
     })
 })
-
-
 
 
 app.listen(process.env.PORT, ()=>{
