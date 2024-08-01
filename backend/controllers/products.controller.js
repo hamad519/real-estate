@@ -12,7 +12,8 @@ export default class ProductController{
                 message: "Product created successfully",
             })
         } catch (error) {
-            console.log(error);
+            // next(new Error(error))
+            next(error)
         }
     }
     
@@ -24,7 +25,7 @@ export default class ProductController{
                 products       
             })
         } catch (error) {
-            console.log(error);
+            next(error);
         } 
     }
     
@@ -37,7 +38,7 @@ export default class ProductController{
             product
         })
        } catch (error) {
-        console.log(error);
+        next(error);
        }
         
     }
@@ -51,7 +52,7 @@ export default class ProductController{
                 message: "product updated successfully"
             })
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
     
@@ -63,7 +64,7 @@ export default class ProductController{
                 message: "product Deleted successfully"
             })
         } catch (error) {
-            console.log(error);
+            next(error);
         }
     }
 }

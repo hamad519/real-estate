@@ -8,6 +8,7 @@ const productSchema = new Schema({
         required:[true, 'Please provide the title'],
         minLength:[5, 'Title must have atleast 5 characters in length'],
         maxLength:[50, 'Title must have less than 50 characters in length'],
+        unique:true
     },
     price: {
         type:Number,
@@ -18,7 +19,7 @@ const productSchema = new Schema({
     description: String,
     category: {
         type:String,
-        enum:['Men Fashion', 'Watches']
+        enum:['Men Fashion', 'Watches', `men's clothing`]
     },
 })
 
