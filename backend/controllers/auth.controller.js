@@ -1,6 +1,7 @@
 
 import {User} from "../models/user.model.js"
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 export default class AuthController{
     
@@ -29,10 +30,17 @@ export default class AuthController{
         const isPasswordMatched = await bcrypt.compare(body.password, user.password)
         if(!isPasswordMatched) return next(new Error('Invalid password'))
 
+        const token = await jwt.sign({
+            id:user._id,
+            username:user.username,
+            email:user.email,
+            role:user.roles
+        }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
         try {
-            res.json({
-                message:"login was called"
-               })
+            res.cookie('auth_token',token, { maxAge: 900000, httpOnly: true }).json({
+                token
+            })
         } catch (error) {
             console.log(error);
         }

@@ -1,6 +1,7 @@
 import express from 'express'
 import 'dotenv/config'
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import { connectDB } from './config/db.js';
 
 import productRoutes from './routes/products.routes.js'
@@ -13,7 +14,7 @@ import { error } from './middleware/error.js';
 const app = express()
 connectDB();
 
-
+app.use(cookieParser())
 app.use(bodyParser.json())
 
 app.use('/', productRoutes)
