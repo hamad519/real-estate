@@ -12,7 +12,6 @@ const SaleOffCarousel = () => {
                     animateOut="fadeOut"
                     animateIn="fadeIn"
                     smartSpeed={1200}
-                    autoHeight={false}
                     autoplay={true}
                     responsive={{
                         0: {
@@ -28,8 +27,7 @@ const SaleOffCarousel = () => {
                 >
                     {
                         saleCarouselData.map((item,idx)=>{
-                            return <>
-                                    <div className="col-lg-4" key={idx}>
+                            return  <div className="col-lg-4" key={idx}>
                             <div className="product__discount__item">
                                 <div className="product__discount__item__pic set-bg"
                                     data-setbg="img/product/discount/pd-1.jpg">
@@ -48,7 +46,6 @@ const SaleOffCarousel = () => {
                                 </div>
                             </div>
                         </div>
-                            </>
                         })
                     }
                         

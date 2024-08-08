@@ -24,8 +24,7 @@ const FeaturedProduct = () => {
                     <div className="row featured__filter">
                         {
                             FeaturedProductData.map((item, idx) => {
-                                return <>
-                                    <div className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat" key={idx}>
+                                return  <div className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat" key={idx}>
                                         <div className="featured__item">
                                             <div className="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
                                                 <img src={item.img} />
@@ -41,7 +40,6 @@ const FeaturedProduct = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </>
                             })
                         }
                     </div>

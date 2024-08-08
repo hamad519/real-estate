@@ -1,12 +1,14 @@
 import React from 'react'
-import HeroBlogDetail from '../components/HeroBlogDetail'
 import BlogDetailContainer from '../components/BlogDetailContainer'
 import RelatedBlogDetail from '../components/RelatedBlogDetail'
+import HeroSection from '../components/HeroSection'
+import BreadcrumbSection from '../components/Breadcrumb'
 
 const BlogDetail = () => {
   return (
     <>
-    <HeroBlogDetail/>
+    <HeroSection/>
+    <BreadcrumbSection pageName={'Blog Detail'}/>
     <BlogDetailContainer/>
     <RelatedBlogDetail/>
     </>

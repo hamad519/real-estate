@@ -36,6 +36,7 @@ body {
 	font-family: "Cairo", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
+	overflow-x: hidden;
 }
 
 h1,
@@ -2864,8 +2865,8 @@ ol {
 }
 
 .contact-form {
-	padding-top: 80px;
-	padding-bottom: 80px;
+	/* padding-top: 80px; */
+	/* padding-bottom: 80px; */
 }
 
 .contact-form form input {
@@ -2874,7 +2875,7 @@ ol {
 	font-size: 16px;
 	color: #6f6f6f;
 	padding-left: 20px;
-	margin-bottom: 30px;
+	/* margin-bottom: 30px; */
 	border: 1px solid #ebebeb;
 	border-radius: 4px;
 }

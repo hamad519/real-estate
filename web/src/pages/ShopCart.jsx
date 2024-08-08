@@ -1,11 +1,13 @@
 import React from 'react'
-import HeroCart from '../components/HeroCart'
 import ShopContainer from '../components/ShopContainer'
+import HeroSection from '../components/HeroSection'
+import BreadcrumbSection from '../components/Breadcrumb'
 
 const ShopCart = () => {
   return (
     <>
-    <HeroCart/>
+    <HeroSection/>
+    <BreadcrumbSection pageName={'Shop Cart'}/>
     <ShopContainer/>
     </>
   )

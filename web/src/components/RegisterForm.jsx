@@ -1,87 +1,133 @@
-import React from 'react'
+import { Link } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useState } from 'react';
+
+import { useRegisterUserMutation } from '../redux/api/authApi';
 
 const RegisterForm = () => {
 
-    const {handleSubmit, handleChange, handleBlur, values, errors, touched, setFieldValue} = useFormik({
-        initialValues: {
-          firstName: '',
-          lastName: '',
-          userName:'',
-          email: '',
-          phoneNumber: '',
-          password:'',
-          cPassword:'',
-          avatar:''
 
+
+    const [registerUser, { isLoading, error, data }] = useRegisterUserMutation()
+
+    const { handleChange, handleBlur, handleSubmit, handleReset, errors, touched, values, setFieldValue} = useFormik({
+        initialValues: {
+            firstName: '',
+            lastName: '',
+            userName: '',
+            email: '',
+            password: '',
+            cPassword: '',
+            phoneNumber: '',
+            avatar: ''
         },
         validationSchema: Yup.object({
-          firstName: Yup.string()
-            .max(15, 'Must be 15 characters or less')
-            .required('Required'),
-          lastName: Yup.string()
-            .max(20, 'Must be 20 characters or less')
-            .required('Required'),
-          email: Yup.string().email('Invalid email address').required('Required'),
-          phoneNumber: Yup.string().required('Required'),
-          password:Yup.string().required('Required'),
-          cPassword:Yup.string().required('Required'),
-          avatar:Yup.string().required('Required'),
-        }),
-        onSubmit: values => {
-          alert(JSON.stringify(values, null, 2));
-        },
-      });
+            firstName: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter valid first name').min(3, 'Minimum 3 letters').max(25, 'Maximum 25 letters').required('First Name is required').trim(),
+            lastName: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter valid last name').min(3, 'Minimum 3 letters').max(25, 'Maximum 25 letters').required('Last Name is required').trim(),
+            userName: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter valid User name').min(3, 'Minimum 3 letters').max(25, 'Maximum 25 letters').required('User Name is required').trim(),
+            email: Yup.string().matches(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, 'Please enter a valid email').required('Email is required').trim(),
+            password: Yup.string().required('password is required').trim(),
+            cPassword: Yup.string().required('Confirm password is required').trim(),
+            // password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Minimum eight characters, at least one letter, one number and one special character').required('password is required').trim(),
+            // cPassword: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Minimum eight characters, at least one letter, one number and one special character').required('Confirm password is required').trim(),
+            phoneNumber: Yup.string().matches(/^((\+92)?(0092)?(92)?(0)?)(3)([0-9]{9})$/, 'Phone number not match 03xx xxxxxxx').required('Phone number is required').trim(),
 
-  return (
-    <>
-    <div className="contact-form spad">
-        <div className="container">
-            <div className="row">
-                <div className="col-lg-12">
-                    <div className="contact__form__title">
-                        <h2>Create new Account</h2>
+        }),
+        onSubmit: async values => {
+            delete values.cPassword;
+
+            const res = await registerUser(values).unwrap();
+            if (res.success) {
+                console.log(res.message);
+            } else {
+                console.log(res.message);
+            }
+
+
+            handleReset()
+
+        },
+    });
+
+    const [preview,setPreview]=useState(undefined)
+
+    const handleImgChange = (e) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setFieldValue('avatar', reader.result);
+            setPreview(reader.result)
+            document.getElementById('preview-reset').reset()
+          }
+        } 
+        reader.readAsDataURL(e.target.files[0]);
+    }
+    
+
+    return (
+        <>
+            <div className="contact-form spad">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="contact__form__title">
+                                <h2>Register New User</h2>
+                            </div>
+                        </div>
                     </div>
+                    <form onSubmit={handleSubmit}>
+                        <div className="row">
+                            <div className="col-lg-6 col-md-6">
+
+                                <input className='mb-3' type="text" name='firstName' value={values.firstName} placeholder="Enter First name" onChange={handleChange} onBlur={handleBlur} />
+                                <strong className='text-danger mx-2'>{errors.firstName && touched.firstName ? errors.firstName : null}</strong>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+
+                                <input className='mb-3' type="text" name='lastName' value={values.lastName} placeholder="Enter Last name" onChange={handleChange} onBlur={handleBlur} />
+                                <strong className='text-danger  mx-2'>{errors.lastName && touched.lastName ? errors.lastName : null}</strong>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+
+                                <input className='mb-3 mt-3' type="text" name='userName' value={values.userName} placeholder="Enter User name" onChange={handleChange} onBlur={handleBlur} />
+                                <strong className='text-danger mx-2'>{errors.userName && touched.userName ? errors.userName : null}</strong>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+                                <input className='mb-3 mt-3' type="text" name='email' value={values.email} placeholder="Enter Your Email" onChange={handleChange} onBlur={handleBlur} />
+                                <strong className='text-danger mx-2'>{errors.email && touched.email ? errors.email : null}</strong>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+
+                                <input className='mb-3 mt-3' type="password" name='password' value={values.password} placeholder="Enter Password" onChange={handleChange} onBlur={handleBlur} />
+                                <strong className='text-danger mx-2'>{errors.password && touched.password ? errors.password : null}</strong>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+
+                                <input className='mb-3 mt-3' type="password" name='cPassword' value={values.cPassword} placeholder="Enter Confirm Password" onChange={handleChange} onBlur={handleBlur} />
+                                <strong className='text-danger mx-2'>{errors.cPassword && touched.cPassword ? errors.cPassword : null}</strong>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+
+                                <input className='mb-3 mt-3' type="text" name='phoneNumber' value={values.phoneNumber} placeholder="Enter Your Phone Number" onChange={handleChange} onBlur={handleBlur} />
+                                <strong className='text-danger mx-2'>{errors.phoneNumber && touched.phoneNumber ? errors.phoneNumber : null}</strong>
+                            </div>
+                            <div className="col-lg-6 col-md-3">
+                               <input className='mb-3 mt-3 pt-2' type="file" name='avatar' onChange={(e)=>handleImgChange(e)}/>
+                            </div>
+                            <div className='col-md-12 text-center mb-4'>
+                                <img src={preview ? preview : `https://www.w3schools.com/howto/img_avatar.png`} className='mt-3' width={100} alt="" value={values.avatar} />
+                            </div>
+                            <div className="col-lg-12 text-center">
+                                <button type="submit" className="site-btn mb-3">Sign up</button> <br />
+                                <Link to={'/login'} className='text-primary'>Already have an Account?</Link>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <form action="#">
-                <div className="row">
-                    <div className="col-lg-6 col-md-6">
-                        <span style={{color:'red', fontSize:'12px'}}>{touched.firstName && errors.firstName ? errors.firstName:null}</span>
-                        <input name="firstName" value={values.firstName} onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Your first name"/>
-                    </div>
-                    <div className="col-lg-6 col-md-6">
-                    <span style={{color:'red', fontSize:'12px'}}>{touched.lastName && errors.lastName ? errors.lastName:null}</span>
-                        <input name="lastName" value={values.lastName} onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Your last name"/>
-                    </div>
-                    <div className="col-lg-6 col-md-6">
-                        <input name="userName" value={values.userName} onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Your username"/>
-                    </div>
-                    <div className="col-lg-6 col-md-6">
-                        <input name="email" value={values.email} onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Your Email"/>
-                    </div>
-                    <div className="col-lg-6 col-md-6">
-                        <input name="password" value={values.password} onChange={handleChange} onBlur={handleBlur} type="password" placeholder="Enter Password"/>
-                    </div>
-                    <div className="col-lg-6 col-md-6">
-                        <input name="cPassword" value={values.cPassword} onChange={handleChange} onBlur={handleBlur} type="password" placeholder="Confirm Password"/>
-                    </div>
-                    <div className="col-lg-6 col-md-6">
-                        <input name="phoneNumber" value={values.phoneNumber} onChange={handleChange} onBlur={handleBlur} type="text" placeholder="Enter Phone Number"/>
-                    </div>
-                    <div className="col-lg-6 col-md-6">
-                        <input name="avatar" value={values.avatar} onChange={handleChange} onBlur={handleBlur} type="file" placeholder="Upload Image"/>
-                    </div>
-                    <div className="col-lg-12 text-center"> 
-                        <button type="submit" className="site-btn">CREATE ACCOUNT</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    </>
-  )
+        </>
+    )
 }
 
 export default RegisterForm

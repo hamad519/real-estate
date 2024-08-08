@@ -7,6 +7,8 @@ export default class AuthController{
     
     async signUp(req, res, next) {
         const user = req.body
+        console.log("Hellooooo");
+        
         try {
             user.password = await bcrypt.hash(user.password, 10);
             await User.create(user)

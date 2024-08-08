@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-const BreadcrumbSection = () => {
+const BreadcrumbSection = ({pageName}) => {
   return (
     <>
     <section className="breadcrumb-section set-bg" style={{
@@ -10,11 +10,7 @@ const BreadcrumbSection = () => {
             <div className="row">
                 <div className="col-lg-12 text-center">
                     <div className="breadcrumb__text">
-                        <h2>Organi Shop</h2>
-                        <div className="breadcrumb__option">
-                            <Link to={'/'}>Home</Link>
-                            <span>Shop</span>
-                        </div>
+                        <h2>{pageName} Page</h2>
                     </div>
                 </div>
             </div>

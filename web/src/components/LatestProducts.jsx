@@ -15,7 +15,6 @@ const LatestProducts = () => {
       '<span class="fa fa-angle-right"></span>',
     ],
     smartSpeed: 1200,
-    autoHeight: false,
     autoplay: true,
   };
 

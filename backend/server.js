@@ -9,10 +9,16 @@ import productRoutes from './routes/products.routes.js'
 import authRoutes from './routes/auth.routes.js'
 
 import { error } from './middleware/error.js';
+import cors from 'cors'
 
+const corsOptions = {
+    origin: 'http://localhost:5173',
+}
 
 const app = express()
 connectDB();
+
+app.use(cors())
 
 app.use(cookieParser())
 app.use(bodyParser.json())

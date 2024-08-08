@@ -18,33 +18,34 @@ const Header = () => {
     <>
       
  
-      {showMenu && (<div class="humberger__menu__overlay active" onClick={() => setShowMenu(false)}></div>)}
+      {showMenu && (<div className="humberger__menu__overlay active" onClick={() => setShowMenu(false)}></div>)}
       
         
         {showMenu && (
         <div className="humberger__menu__wrapper show__humberger__menu__wrapper">
-          <div class="humberger__menu__logo">
+          <div className="humberger__menu__logo">
             <a href="#"><img src="img/logo.png" alt=""/></a>
         </div>
-        <div class="humberger__menu__cart">
+        <div className="humberger__menu__cart">
             <ul>
-                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                <li><a href="#"><i className="fa fa-heart"></i> <span>1</span></a></li>
+                <li><a href="#"><i className="fa fa-shopping-bag"></i> <span>3</span></a></li>
             </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
+            <div className="header__cart__price">item: <span>$150.00</span></div>
         </div>
-        <div class="humberger__menu__widget">
-            <div class="header__top__right__language">
+        <div className="humberger__menu__widget">
+            <div className="header__top__right__language">
                 <img src="img/language.png" alt=""/>
                 <div>English</div>
-                <span class="arrow_carrot-down"></span>
+                <span className="arrow_carrot-down"></span>
                 <ul>
                     <li><a href="#">Spanis</a></li>
                     <li><a href="#">English</a></li>
                 </ul>
             </div>
-            <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
+            <div className="header__top__right__auth">
+            <Link to={'/register'}><i className="fa fa-user"></i> Sign-up</Link>
+            <Link to={'/login'}><i className="fa fa-user"></i> Login</Link>
             </div>
         </div>
         <nav className="humberger__menu__nav mobile-menu">
@@ -56,8 +57,8 @@ const Header = () => {
       <Link to={'/shop'}>Shop</Link>
     </li>
     <li>
-        <a href="#" onClick={handlePagesClick}>
-          Pages <i class="fa-solid fa-angle-right"></i>
+        <a onClick={handlePagesClick}>
+          Pages <i className="fa-solid fa-angle-right"></i>
         </a>
         {showPagesDropdown && (
           <ul className="header__menu__dropdown">
@@ -85,15 +86,15 @@ const Header = () => {
   </ul>
 </nav>
           <div id="mobile-menu-wrap"></div>
-        <div class="header__top__right__social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-pinterest-p"></i></a>
+        <div className="header__top__right__social">
+            <a href="#"><i className="fa fa-facebook"></i></a>
+            <a href="#"><i className="fa fa-twitter"></i></a>
+            <a href="#"><i className="fa fa-linkedin"></i></a>
+            <a href="#"><i className="fa fa-pinterest-p"></i></a>
         </div>
-        <div class="humberger__menu__contact">
+        <div className="humberger__menu__contact">
             <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
+                <li><i className="fa fa-envelope"></i> hello@colorlib.com</li>
                 <li>Free Shipping for all Order of $99</li>
             </ul>
         </div>
@@ -104,57 +105,52 @@ const Header = () => {
    
 
    
-    <header class="header">
-        <div class="header__top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="header__top__left">
-                            <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                                <li>Free Shipping for all Order of $99</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="header__top__right">
-                            <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
+    <header className="header">
+        <div className="header__top">
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-10 col-md-6">
+                        <div className="header__top__left">
+                            <div className="header__top__right__social">
+                                <a href="#"><i className="fa fa-facebook"></i></a>
+                                <a href="#"><i className="fa fa-twitter"></i></a>
+                                <a href="#"><i className="fa fa-linkedin"></i></a>
+                                <a href="#"><i className="fa fa-pinterest-p"></i></a>
                             </div>
-                            <div class="header__top__right__language">
+                            <div className="header__top__right__language">
                                 <img src="img/language.png" alt=""/>
                                 <div>English</div>
-                                <span class="arrow_carrot-down"></span>
+                                <span className="arrow_carrot-down"></span>
                                 <ul>
                                     <li><a href="#">Spanis</a></li>
                                     <li><a href="#">English</a></li>
                                 </ul>
                             </div>
-                            <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
-                            </div>
                         </div>
+                    </div>
+                    <div className="col-lg-2 col-md-6">
+                            <div className="header__top__right__auth d-flex pt-3 justify-content-between">
+                            <Link to={'/register'}><i className="fa fa-user"></i> Sign-up</Link>
+                            <Link to={'/login'}><i className="fa fa-user"></i> Login</Link>
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="header__logo">
+        <div className="container">
+            <div className="row">
+                <div className="col-lg-3">
+                    <div className="header__logo">
                         <a href="./index.html"><img src="img/logo.png" alt=""/></a>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <nav class="header__menu">
+                <div className="col-lg-6">
+                    <nav className="header__menu">
                         <ul>
-                            <li class="active"><Link to={'/'}>Home</Link></li>
+                            <li className="active"><Link to={'/'}>Home</Link></li>
                             <li><Link to={'/shop'}>Shop</Link></li>
                             <li><a href="#">Pages</a>
-                                <ul class="header__menu__dropdown">
+                                <ul className="header__menu__dropdown">
                                     <li><Link to={'/shop-details'}>Shop Details</Link></li>
                                     <li><Link to={'/cart'}>Shoping Cart</Link></li>
                                     <li><Link to={'/check-out'}>Check Out</Link></li>
@@ -166,18 +162,18 @@ const Header = () => {
                         </ul>
                     </nav>
                 </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
+                <div className="col-lg-3">
+                    <div className="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="#"><i className="fa fa-heart"></i> <span>1</span></a></li>
+                            <li><a href="#"><i className="fa fa-shopping-bag"></i> <span>3</span></a></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        <div className="header__cart__price">item: <span>$150.00</span></div>
                     </div>
                 </div>
             </div>
-            <div class="humberger__open" onClick={handleHamburgerClick}>
-                <i class="fa fa-bars"></i>
+            <div className="humberger__open" onClick={handleHamburgerClick}>
+                <i className="fa fa-bars"></i>
             </div>
         </div>
     </header>

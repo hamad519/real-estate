@@ -1,16 +1,15 @@
 import React from 'react'
-import BlogContainer from '../components/BlogContainer'
 import HeroSection from '../components/HeroSection'
 import BreadcrumbSection from '../components/Breadcrumb'
-
-const Blog = () => {
+import RegisterForm from '../components/RegisterForm'
+const Register = () => {
   return (
     <>
     <HeroSection/>
-    <BreadcrumbSection pageName={'Blog'}/>
-    <BlogContainer/>
+    <BreadcrumbSection pageName={'Register'}/>
+    <RegisterForm/>
     </>
   )
 }
 
-export default Blog
+export default Register

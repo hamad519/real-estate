@@ -1,11 +1,13 @@
 import React from 'react'
-import HeroCheckout from '../components/HeroCheckout'
 import CheckoutContainer from '../components/CheckoutContainer'
+import HeroSection from '../components/HeroSection'
+import BreadcrumbSection from '../components/Breadcrumb'
 
 const Checkout = () => {
   return (
     <>
-    <HeroCheckout/>
+    <HeroSection/>
+    <BreadcrumbSection pageName={'Checkout'}/>
     <CheckoutContainer/>
     </>
   )

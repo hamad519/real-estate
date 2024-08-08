@@ -11,7 +11,8 @@ import Checkout from './pages/Checkout'
 import BlogDetail from './pages/BlogDetail'
 import Blog from './pages/Blog'
 import Contact from './pages/Contact'
-import NewAccount from './pages/NewAccount'
+import Register from './pages/Register'
+import Login from './components/Login'
 
 const App = () => {
   const router = createBrowserRouter(
@@ -25,7 +26,10 @@ const App = () => {
         <Route path='/blog-details' element={<BlogDetail/>}/>
         <Route path='/blog' element={<Blog/>}/>
         <Route path='/contact' element={<Contact/>}/>
-        <Route path='/signup' element={<NewAccount/>}/>
+        <Route path='/register' element={<Register/>}/>
+        <Route path='/login' element={<Login/>}/>
+
+
       </Route>
     )
   )

@@ -1,13 +1,15 @@
 import React from 'react'
-import HeroContact from '../components/HeroContact'
 import ContactSection from '../components/ContactSection'
 import ContactMap from '../components/ContactMap'
 import ContactForm from '../components/ContactForm'
+import HeroSection from '../components/HeroSection'
+import BreadcrumbSection from '../components/Breadcrumb'
 
 const Contact = () => {
   return (
     <>
-    <HeroContact/>
+    <HeroSection/>
+    <BreadcrumbSection pageName={'Contact'}/>
     <ContactSection/>
     <ContactMap/>
     <ContactForm/>

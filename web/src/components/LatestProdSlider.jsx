@@ -9,7 +9,6 @@ const LatestProdSlider = () => {
                 items={1}
                 nav={true}
                 smartSpeed={1200}
-                autoHeight={false}
                 autoplay={true}
             >
                 <div className="latest-prdouct__slider__item">

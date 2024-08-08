@@ -15,7 +15,7 @@ const AllCategory = () => {
             <i className="fa fa-bars"></i>
             <span>All departments</span>
           </div>
-          <ul style={{ display: showList? 'block' : 'none' }}>
+          <ul style={{ display: showList? 'block' : 'none'}}>
             <li><a href="#">Fresh Meat</a></li>
             <li><a href="#">Vegetables</a></li>
             <li><a href="#">Fruit & Nut Gifts</a></li>
