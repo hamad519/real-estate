@@ -3,7 +3,7 @@ import 'dotenv/config'
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { connectDB } from './config/db.js';
-
+import { v2 as cloudinary } from 'cloudinary';
 import productRoutes from './routes/products.routes.js'
 
 import authRoutes from './routes/auth.routes.js'
@@ -18,10 +18,19 @@ const corsOptions = {
 const app = express()
 connectDB();
 
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET 
+});
+
 app.use(cors())
 
 app.use(cookieParser())
-app.use(bodyParser.json())
+// app.use(bodyParser.json())
+
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 
 app.use('/', productRoutes)
 app.use('/', authRoutes)

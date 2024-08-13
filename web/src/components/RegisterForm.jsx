@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
-
 import { useRegisterUserMutation } from '../redux/api/authApi';
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '../redux/features/authSlice';
 
 const RegisterForm = () => {
 
@@ -11,41 +12,47 @@ const RegisterForm = () => {
 
     const [registerUser, { isLoading, error, data }] = useRegisterUserMutation()
 
+    const [apiMessage, setApiMessage] = useState(null)
+   
+
+    const dispatch = useDispatch()
+
     const { handleChange, handleBlur, handleSubmit, handleReset, errors, touched, values, setFieldValue} = useFormik({
         initialValues: {
-            firstName: '',
-            lastName: '',
-            userName: '',
+            firstname: '',
+            lastname: '',
+            username: '',
             email: '',
             password: '',
             cPassword: '',
-            phoneNumber: '',
+            phonenumber: '',
             avatar: ''
         },
         validationSchema: Yup.object({
-            firstName: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter valid first name').min(3, 'Minimum 3 letters').max(25, 'Maximum 25 letters').required('First Name is required').trim(),
-            lastName: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter valid last name').min(3, 'Minimum 3 letters').max(25, 'Maximum 25 letters').required('Last Name is required').trim(),
-            userName: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter valid User name').min(3, 'Minimum 3 letters').max(25, 'Maximum 25 letters').required('User Name is required').trim(),
+            firstname: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter valid first name').min(3, 'Minimum 3 letters').max(25, 'Maximum 25 letters').required('First Name is required').trim(),
+            lastname: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter valid last name').min(3, 'Minimum 3 letters').max(25, 'Maximum 25 letters').required('Last Name is required').trim(),
+            username: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter valid User name').min(3, 'Minimum 3 letters').max(25, 'Maximum 25 letters').required('User Name is required').trim(),
             email: Yup.string().matches(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, 'Please enter a valid email').required('Email is required').trim(),
             password: Yup.string().required('password is required').trim(),
             cPassword: Yup.string().required('Confirm password is required').trim(),
             // password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Minimum eight characters, at least one letter, one number and one special character').required('password is required').trim(),
             // cPassword: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Minimum eight characters, at least one letter, one number and one special character').required('Confirm password is required').trim(),
-            phoneNumber: Yup.string().matches(/^((\+92)?(0092)?(92)?(0)?)(3)([0-9]{9})$/, 'Phone number not match 03xx xxxxxxx').required('Phone number is required').trim(),
+            phonenumber: Yup.string().matches(/^((\+92)?(0092)?(92)?(0)?)(3)([0-9]{9})$/, 'Phone number not match 03xx xxxxxxx').required('Phone number is required').trim(),
 
         }),
         onSubmit: async values => {
             delete values.cPassword;
-
-            const res = await registerUser(values).unwrap();
-            if (res.success) {
-                console.log(res.message);
-            } else {
-                console.log(res.message);
+            const user = await registerUser(values).unwrap()
+            if(user){
+                setApiMessage(user)
+            }else{
+                setApiMessage({
+                    success:false,
+                    message:'Something went wrong'
+                }) 
             }
-
-
-            handleReset()
+            
+            // handleReset()
 
         },
     });
@@ -69,6 +76,11 @@ const RegisterForm = () => {
         <>
             <div className="contact-form spad">
                 <div className="container">
+                {
+                    apiMessage && <div class={`alert alert-${apiMessage && apiMessage.success ? 'success':'danger'}`} role="alert">
+                        {apiMessage && apiMessage.message}
+                    </div>
+                }
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="contact__form__title">
@@ -80,18 +92,18 @@ const RegisterForm = () => {
                         <div className="row">
                             <div className="col-lg-6 col-md-6">
 
-                                <input className='mb-3' type="text" name='firstName' value={values.firstName} placeholder="Enter First name" onChange={handleChange} onBlur={handleBlur} />
-                                <strong className='text-danger mx-2'>{errors.firstName && touched.firstName ? errors.firstName : null}</strong>
+                                <input className='mb-3' type="text" name='firstname' value={values.firstname} placeholder="Enter First name" onChange={handleChange} onBlur={handleBlur} />
+                                <strong className='text-danger mx-2'>{errors.firstname && touched.firstname ? errors.firstname : null}</strong>
                             </div>
                             <div className="col-lg-6 col-md-6">
 
-                                <input className='mb-3' type="text" name='lastName' value={values.lastName} placeholder="Enter Last name" onChange={handleChange} onBlur={handleBlur} />
-                                <strong className='text-danger  mx-2'>{errors.lastName && touched.lastName ? errors.lastName : null}</strong>
+                                <input className='mb-3' type="text" name='lastname' value={values.lastname} placeholder="Enter Last name" onChange={handleChange} onBlur={handleBlur} />
+                                <strong className='text-danger  mx-2'>{errors.lastname && touched.lastname ? errors.lastname : null}</strong>
                             </div>
                             <div className="col-lg-6 col-md-6">
 
-                                <input className='mb-3 mt-3' type="text" name='userName' value={values.userName} placeholder="Enter User name" onChange={handleChange} onBlur={handleBlur} />
-                                <strong className='text-danger mx-2'>{errors.userName && touched.userName ? errors.userName : null}</strong>
+                                <input className='mb-3 mt-3' type="text" name='username' value={values.username} placeholder="Enter User name" onChange={handleChange} onBlur={handleBlur} />
+                                <strong className='text-danger mx-2'>{errors.username && touched.username ? errors.username : null}</strong>
                             </div>
                             <div className="col-lg-6 col-md-6">
                                 <input className='mb-3 mt-3' type="text" name='email' value={values.email} placeholder="Enter Your Email" onChange={handleChange} onBlur={handleBlur} />
@@ -109,8 +121,8 @@ const RegisterForm = () => {
                             </div>
                             <div className="col-lg-6 col-md-6">
 
-                                <input className='mb-3 mt-3' type="text" name='phoneNumber' value={values.phoneNumber} placeholder="Enter Your Phone Number" onChange={handleChange} onBlur={handleBlur} />
-                                <strong className='text-danger mx-2'>{errors.phoneNumber && touched.phoneNumber ? errors.phoneNumber : null}</strong>
+                                <input className='mb-3 mt-3' type="text" name='phonenumber' value={values.phonenumber} placeholder="Enter Your Phone Number" onChange={handleChange} onBlur={handleBlur} />
+                                <strong className='text-danger mx-2'>{errors.phonenumber && touched.phonenumber ? errors.phonenumber : null}</strong>
                             </div>
                             <div className="col-lg-6 col-md-3">
                                <input className='mb-3 mt-3 pt-2' type="file" name='avatar' onChange={(e)=>handleImgChange(e)}/>

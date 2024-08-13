@@ -2,23 +2,41 @@
 import {User} from "../models/user.model.js"
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { v2 as cloudinary } from 'cloudinary';
 
 export default class AuthController{
     
     async signUp(req, res, next) {
         const user = req.body
-        console.log("Hellooooo");
+
+
+
         
         try {
-            user.password = await bcrypt.hash(user.password, 10);
-            await User.create(user)
-           res.json({
-            message:"user account has been created"
-           })
+
+
+            const uploadResult = await cloudinary.uploader.upload(req.body.avatar, {
+                folder: 'ecommerce-b14',
+            }).catch((error) => {
+               next(error)
+            });
+
+            if(uploadResult){
+                user.avatar = uploadResult.secure_url;
+                user.password = await bcrypt.hash(user.password, 10);
+                await User.create(user)
+                res.json({
+                    success:true,
+                    message:"user account has been created"
+                })
+            }
+
         } catch (error) {
             next(error);
         }
     }
+
+
 
     async login(req, res, next) {
         const body = req.body;
