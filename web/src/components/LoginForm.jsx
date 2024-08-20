@@ -1,9 +1,21 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useLoginUserMutation } from '../redux/api/authApi';
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '../redux/features/authSlice';
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+
+
+    const [loginUser, {isLoading, error}] = useLoginUserMutation();
+    const dispatch = useDispatch();
+    const [apiErr, setApiErr] = useState(null);
+
+    const navigate = useNavigate();
+
     const { handleChange, handleBlur, handleSubmit, handleReset, errors, touched, values } = useFormik({
         initialValues: {
             email: '',
@@ -11,19 +23,35 @@ const LoginForm = () => {
         },
         validationSchema: Yup.object({
             email: Yup.string().matches(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, 'Please enter a valid email').required('Email is required').trim(),
-            password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Minimum eight characters, at least one letter, one number and one special character').required('password is required').trim(),
+            // password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Minimum eight characters, at least one letter, one number and one special character').required('password is required').trim(),
+            password: Yup.string().required('password is required').trim(),
 
         }),
-        onSubmit: values => {
-            console.log(values);
-            handleReset()
+        onSubmit: async values => {
+            
+            const res = await loginUser(values).unwrap()
+            console.log(res);
+            if(res && res.success == true){
+                dispatch(setUserInfo(res))
+                navigate('/')
+            }else{
+                setApiErr(res)
+            }
+                
 
+            
+            // handleReset();
         },
     });
     return (
         <>
             <div className="contact-form spad">
                 <div className="container">
+                {
+                    apiErr && <div class='alert alert-danger' role="alert">
+                        {apiErr && apiErr.message}
+                    </div>
+                }
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="contact__form__title">

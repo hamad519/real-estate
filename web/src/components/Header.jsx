@@ -1,6 +1,35 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
+import { useGetMeQuery, useLogoutMutation } from '../redux/api/authApi';
+import { clearUserInfo, setUserInfo } from '../redux/features/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
+
 const Header = () => {
+
+
+  const {data: userRes, isFetching, isLoading,} = useGetMeQuery()
+
+  const [logout, {data}] = useLogoutMutation()
+
+  const dispatch = useDispatch()
+  dispatch(setUserInfo(userRes))
+  
+  
+  const {isAuthenticated, user} = useSelector(state=>state.auth)
+
+  console.log("isAuthenticated", isAuthenticated);
+  console.log("user", user);
+
+
+
+  const handlelogout = async ()=>{
+    const res = await logout().unwrap()
+    
+    dispatch(clearUserInfo())
+  }
+  
+
     const [showMenu, setShowMenu] = useState(false);
 
     const handleHamburgerClick = () => {
@@ -44,6 +73,7 @@ const Header = () => {
                 </ul>
             </div>
             <div className="header__top__right__auth">
+  
             <Link to={'/register'}><i className="fa fa-user"></i> Sign-up</Link>
             <Link to={'/login'}><i className="fa fa-user"></i> Login</Link>
             </div>
@@ -109,7 +139,7 @@ const Header = () => {
         <div className="header__top">
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-10 col-md-6">
+                    <div className="col-lg-8 col-md-6">
                         <div className="header__top__left">
                             <div className="header__top__right__social">
                                 <a href="#"><i className="fa fa-facebook"></i></a>
@@ -128,10 +158,29 @@ const Header = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-2 col-md-6">
-                            <div className="header__top__right__auth d-flex pt-3 justify-content-between">
-                            <Link to={'/register'}><i className="fa fa-user"></i> Sign-up</Link>
-                            <Link to={'/login'}><i className="fa fa-user"></i> Login</Link>
+                    <div className="col-lg-4 col-md-6">
+                      
+                            <div className='d-flex justify-content-end'>
+                              <div className="header__top__right__auth d-flex pt-3">
+                                
+                                {
+                                  isAuthenticated ? <div className="header__top__right__language">
+                                  <img style={{width:'30px', height:'30px', borderRadius:'50%'}} src={user?.user?.avatar} alt=""/>
+                                  <div>Hi, {user?.user?.firstname} {user?.user?.lastname}</div>
+                                  <span className="arrow_carrot-down"></span>
+                                  <ul>
+                                      <li><Link to="#">Dashboard</Link></li>
+                                      <li><Link to="#">Profile</Link></li>
+                                      <li><button onClick={handlelogout}>Logout</button></li>
+                                  </ul>
+                                  </div>:
+                                  <>
+                                  <Link to={'/register'}><i className="fa fa-user"></i> Sign-up</Link>
+                                  <Link to={'/login'}><i className="fa fa-user"></i> Login</Link>
+                                  </>
+                                }
+                                
+                              </div>
                             </div>
                     </div>
                 </div>

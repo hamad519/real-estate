@@ -13,8 +13,13 @@ import Blog from './pages/Blog'
 import Contact from './pages/Contact'
 import Register from './pages/Register'
 import Login from './components/Login'
+import { useSelector } from 'react-redux';
+import Error from './pages/Error'
 
 const App = () => {
+
+  const {isAuthenticated} = useSelector(state=>state.auth)
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Layout/>}>
@@ -26,8 +31,10 @@ const App = () => {
         <Route path='/blog-details' element={<BlogDetail/>}/>
         <Route path='/blog' element={<Blog/>}/>
         <Route path='/contact' element={<Contact/>}/>
-        <Route path='/register' element={<Register/>}/>
+        <Route path='/register' element={!isAuthenticated ? <Register/>:<Home/>}/>
         <Route path='/login' element={<Login/>}/>
+        {/* <Route path='/login' element={!isAuthenticated ? <Login/>:<Home/>}/> */}
+        
 
 
       </Route>

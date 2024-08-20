@@ -7,14 +7,9 @@ import { v2 as cloudinary } from 'cloudinary';
 export default class AuthController{
     
     async signUp(req, res, next) {
-        const user = req.body
-
-
-
+        const user = req.body;
         
         try {
-
-
             const uploadResult = await cloudinary.uploader.upload(req.body.avatar, {
                 folder: 'ecommerce-b14',
             }).catch((error) => {
@@ -22,7 +17,13 @@ export default class AuthController{
             });
 
             if(uploadResult){
+                console.log("uploadResult.secure_url", uploadResult.secure_url);
+                
                 user.avatar = uploadResult.secure_url;
+
+                console.log("user", user);
+                
+
                 user.password = await bcrypt.hash(user.password, 10);
                 await User.create(user)
                 res.json({
@@ -50,7 +51,7 @@ export default class AuthController{
         const isPasswordMatched = await bcrypt.compare(body.password, user.password)
         if(!isPasswordMatched) return next(new Error('Invalid password'))
 
-        const token = await jwt.sign({
+        const token = jwt.sign({
             id:user._id,
             username:user.username,
             email:user.email,
@@ -59,7 +60,21 @@ export default class AuthController{
 
         try {
             res.cookie('auth_token',token, { maxAge: 900000, httpOnly: true }).json({
-                token
+                token,
+                user,
+                success:true
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    async logout(req, res, next) {
+        console.log('Logout function is called');
+        
+        try {
+            res.cookie('auth_token',null, { expiresIn: Date.now() }).json({
+                success:true,
+                message:'You are logged out'
             })
         } catch (error) {
             console.log(error);

@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import { connectDB } from './config/db.js';
 import { v2 as cloudinary } from 'cloudinary';
 import productRoutes from './routes/products.routes.js'
-
+import userRoutes from './routes/user.routes.js'
 import authRoutes from './routes/auth.routes.js'
 
 import { error } from './middleware/error.js';
@@ -13,6 +13,7 @@ import cors from 'cors'
 
 const corsOptions = {
     origin: 'http://localhost:5173',
+    credentials:true
 }
 
 const app = express()
@@ -24,7 +25,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET 
 });
 
-app.use(cors())
+app.use(cors(corsOptions))
 
 app.use(cookieParser())
 // app.use(bodyParser.json())
@@ -34,6 +35,7 @@ app.use(express.urlencoded({limit: '50mb'}));
 
 app.use('/', productRoutes)
 app.use('/', authRoutes)
+app.use('/', userRoutes)
 
 app.use('*', (req, res, next)=>{
     res.json({
