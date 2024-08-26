@@ -68,11 +68,9 @@ export default class AuthController{
             console.log(error);
         }
     }
-    async logout(req, res, next) {
-        console.log('Logout function is called');
-        
+    async logout(req, res, next) {        
         try {
-            res.cookie('auth_token',null, { expiresIn: Date.now() }).json({
+            res.cookie('auth_token','', { maxAge: 0, httpOnly: true }).json({
                 success:true,
                 message:'You are logged out'
             })

@@ -47,6 +47,7 @@ export default class UserController{
        try {
         const user = await User.findById(id)
         res.json({
+            success:true,
             user
         })
        } catch (error) {

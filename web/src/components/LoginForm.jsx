@@ -29,16 +29,9 @@ const LoginForm = () => {
         }),
         onSubmit: async values => {
             
-            const res = await loginUser(values).unwrap()
-            console.log(res);
-            if(res && res.success == true){
-                dispatch(setUserInfo(res))
-                navigate('/')
-            }else{
-                setApiErr(res)
-            }
-                
-
+            const res = await loginUser(values)
+            dispatch(setUserInfo(res))
+            navigate(0)
             
             // handleReset();
         },

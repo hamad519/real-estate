@@ -32,8 +32,8 @@ const App = () => {
         <Route path='/blog' element={<Blog/>}/>
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/register' element={!isAuthenticated ? <Register/>:<Home/>}/>
-        <Route path='/login' element={<Login/>}/>
-        {/* <Route path='/login' element={!isAuthenticated ? <Login/>:<Home/>}/> */}
+        {/* <Route path='/login' element={<Login/>}/> */}
+        <Route path='/login' element={!isAuthenticated ? <Login/>:<Home/>}/>
         
 
 
