@@ -15,7 +15,20 @@ export const authApi = createApi({
                 url: `auth/login`,
                 method: 'POST',
                 body: data,
-            })
+            }),
+            async onQueryStarted(arg, {dispatch,queryFulfilled}) {
+                
+                try {
+                    await queryFulfilled;
+                    console.log("-------------------------");
+                    console.log("onQueryStarted inside LoginUser");
+                    console.log("-------------------------");
+                    dispatch(authApi.endpoints.getMe.initiate(null));
+                    // dispatch(setUserInfo({isAuthenticated:true}));
+                } catch (err) {
+                    dispatch(clearUserInfo())
+                }
+            }
         }),
         registerUser: builder.mutation({
             query: (data) => ({
@@ -28,12 +41,20 @@ export const authApi = createApi({
             query: () => 'me',
             async onQueryStarted(arg, {dispatch,queryFulfilled}) {
                 try {
+                    
                     const { data } = await queryFulfilled;
-                    console.log('data', data);
-                    if(!data){
-                        dispatch(clearUserInfo());
+                    if(data.success === false){
+                        dispatch(clearUserInfo({
+                            user: null,
+                            isAuthenticated: false
+                        }))
+                        return
                     }
-                    dispatch(setUserInfo(data));
+                    dispatch(setUserInfo({
+                        user: data,
+                        isAuthenticated: true
+                    }));
+                    
                 } catch (err) {
                     dispatch(clearUserInfo())
                 }

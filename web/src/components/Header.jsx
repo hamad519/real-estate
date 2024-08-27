@@ -9,25 +9,19 @@ import { clearUserInfo } from '../redux/features/authSlice';
 const Header = () => {
 
 
-  const {isLoading,} = useGetMeQuery()
+  const {isLoading} = useGetMeQuery()
   const [logout, {data}] = useLazyLogoutQuery()
   const {isAuthenticated, user} = useSelector(state=>state.auth)
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
 
-  console.log('state user', {
-    isAuthenticated,
-    user
-  });
-  
-
-
-
   const handlelogout = async ()=>{
     await logout()
-    // console.log('Hello', res);
-    // dispatch(clearUserInfo())
+    dispatch(clearUserInfo({
+      user:null,
+      isAuthenticated:false
+    }))
     navigate(0)
   }
   

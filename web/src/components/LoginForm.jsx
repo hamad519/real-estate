@@ -29,9 +29,8 @@ const LoginForm = () => {
         }),
         onSubmit: async values => {
             
-            const res = await loginUser(values)
-            dispatch(setUserInfo(res))
-            navigate(0)
+            await loginUser(values)
+            // navigate(0)
             
             // handleReset();
         },

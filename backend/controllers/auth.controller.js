@@ -58,6 +58,9 @@ export default class AuthController{
             role:user.roles
         }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
+        
+        
+
         try {
             res.cookie('auth_token',token, { maxAge: 900000, httpOnly: true }).json({
                 token,
