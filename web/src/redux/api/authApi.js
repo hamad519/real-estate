@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { clearUserInfo, setUserInfo } from '../features/authSlice';
+import { clearUserInfo, setIsAuthenticated, setUserInfo } from '../features/authSlice';
 
 
 
@@ -20,13 +20,10 @@ export const authApi = createApi({
                 
                 try {
                     await queryFulfilled;
-                    console.log("-------------------------");
-                    console.log("onQueryStarted inside LoginUser");
-                    console.log("-------------------------");
                     dispatch(authApi.endpoints.getMe.initiate(null));
-                    // dispatch(setUserInfo({isAuthenticated:true}));
                 } catch (err) {
-                    dispatch(clearUserInfo())
+                    console.log('11111111111');
+                    
                 }
             }
         }),
@@ -41,22 +38,11 @@ export const authApi = createApi({
             query: () => 'me',
             async onQueryStarted(arg, {dispatch,queryFulfilled}) {
                 try {
-                    
                     const { data } = await queryFulfilled;
-                    if(data.success === false){
-                        dispatch(clearUserInfo({
-                            user: null,
-                            isAuthenticated: false
-                        }))
-                        return
-                    }
-                    dispatch(setUserInfo({
-                        user: data,
-                        isAuthenticated: true
-                    }));
-                    
+                    dispatch(setUserInfo(data));
+                    dispatch(setIsAuthenticated(true));
                 } catch (err) {
-                    dispatch(clearUserInfo())
+                    console.log(err);
                 }
             }
         }),
@@ -64,9 +50,9 @@ export const authApi = createApi({
             query: () => `auth/logout`,
             async onQueryStarted(arg, {dispatch,queryFulfilled}) {
                 try {
-                    dispatch(clearUserInfo());
+                    // dispatch(clearUserInfo());
                 } catch (err) {
-                    dispatch(clearUserInfo())
+                    // dispatch(clearUserInfo())
                 }
             }
         }),

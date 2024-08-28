@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -14,6 +14,12 @@ const LoginForm = () => {
     const dispatch = useDispatch();
     const [apiErr, setApiErr] = useState(null);
 
+    useEffect(() => {
+        if(error){
+            console.log(error);
+        }
+    }, [error])
+
     const navigate = useNavigate();
 
     const { handleChange, handleBlur, handleSubmit, handleReset, errors, touched, values } = useFormik({
@@ -28,11 +34,8 @@ const LoginForm = () => {
 
         }),
         onSubmit: async values => {
-            
-            await loginUser(values)
+            loginUser(values)
             // navigate(0)
-            
-            // handleReset();
         },
     });
     return (
@@ -63,7 +66,7 @@ const LoginForm = () => {
                                 <strong className='text-danger mx-2'>{errors.password && touched.password ? errors.password : null}</strong>
                             </div>
                             <div className="col-lg-12 text-center mt-5">
-                                <button type="submit" className="site-btn mb-3">Sign in</button> <br />
+                                <button type="submit" disabled={isLoading} className="site-btn mb-3">{isLoading ? 'Authenticating..': 'Sign in'}</button> <br />
                                 <Link to={'/register'} className='text-primary'>Don't have an Account?</Link>
                             </div>
                         </div>

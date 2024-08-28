@@ -18,10 +18,6 @@ const Header = () => {
 
   const handlelogout = async ()=>{
     await logout()
-    dispatch(clearUserInfo({
-      user:null,
-      isAuthenticated:false
-    }))
     navigate(0)
   }
   
