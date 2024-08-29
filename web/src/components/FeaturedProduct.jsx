@@ -1,6 +1,32 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { FeaturedProductData } from '../Data/FeaturedProduct'
+import { useGetAllProductsQuery } from '../redux/api/productApi'
+import ContentLoader from 'react-content-loader'
 const FeaturedProduct = () => {
+
+
+
+    const {data, isLoading, error} = useGetAllProductsQuery()
+
+
+
+    const [products, setProducts] = useState([])
+
+
+
+    useEffect(() => {
+        if(data){
+            setProducts(data.products)
+        }  
+        console.log(products);
+        
+    },[data, products])
+
+
+
+    if(isLoading) return <ContentLoader/>
+    
+
     return (
         <>
             <section className="featured spad">
@@ -10,20 +36,12 @@ const FeaturedProduct = () => {
                             <div className="section-title">
                                 <h2>Featured Product</h2>
                             </div>
-                            <div className="featured__controls">
-                                <ul>
-                                    <li className="active" data-filter="*">All</li>
-                                    <li data-filter=".oranges">Oranges</li>
-                                    <li data-filter=".fresh-meat">Fresh Meat</li>
-                                    <li data-filter=".vegetables">Vegetables</li>
-                                    <li data-filter=".fastfood">Fastfood</li>
-                                </ul>
-                            </div>
+                            
                         </div>
                     </div>
                     <div className="row featured__filter">
                         {
-                            FeaturedProductData.map((item, idx) => {
+                            products.map((item, idx) => {
                                 return  <div className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat" key={idx}>
                                         <div className="featured__item">
                                             <div className="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">

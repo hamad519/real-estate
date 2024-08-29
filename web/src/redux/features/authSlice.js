@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 
 
 const {actions, reducer} = createSlice({
@@ -10,17 +10,17 @@ const {actions, reducer} = createSlice({
     reducers:{
         setUserInfo:(state, action)=>{
             state.user = action.payload
-            state.isAuthenticated = true
+        },
+        setIsAuthenticated:(state, action)=>{
+            state.isAuthenticated = action.payload
         },
         clearUserInfo:(state, action)=>{
-            state.user = null
-            state.isAuthenticated = false
         }
     }
 })
 
 
-export const  {setUserInfo, clearUserInfo} = actions
+export const  {setUserInfo, clearUserInfo, setIsAuthenticated} = actions
 export default reducer
 
 

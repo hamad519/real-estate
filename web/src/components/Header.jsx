@@ -1,32 +1,24 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { useGetMeQuery, useLogoutMutation } from '../redux/api/authApi';
-import { clearUserInfo, setUserInfo } from '../redux/features/authSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useGetMeQuery, useLazyLogoutQuery } from '../redux/api/authApi';
+import { useNavigate } from 'react-router-dom';
+import {useSelector, useDispatch } from 'react-redux';
+import { clearUserInfo } from '../redux/features/authSlice';
 
 
 const Header = () => {
 
 
-  const {data: userRes, isFetching, isLoading,} = useGetMeQuery()
-
-  const [logout, {data}] = useLogoutMutation()
-
-  const dispatch = useDispatch()
-  dispatch(setUserInfo(userRes))
-  
-  
+  const {isLoading} = useGetMeQuery()
+  const [logout, {data}] = useLazyLogoutQuery()
   const {isAuthenticated, user} = useSelector(state=>state.auth)
-
-  console.log("isAuthenticated", isAuthenticated);
-  console.log("user", user);
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
 
 
   const handlelogout = async ()=>{
-    const res = await logout().unwrap()
-    
-    dispatch(clearUserInfo())
+    await logout()
+    navigate(0)
   }
   
 
@@ -121,6 +113,7 @@ const Header = () => {
             <a href="#"><i className="fa fa-twitter"></i></a>
             <a href="#"><i className="fa fa-linkedin"></i></a>
             <a href="#"><i className="fa fa-pinterest-p"></i></a>
+            
         </div>
         <div className="humberger__menu__contact">
             <ul>
@@ -146,6 +139,7 @@ const Header = () => {
                                 <a href="#"><i className="fa fa-twitter"></i></a>
                                 <a href="#"><i className="fa fa-linkedin"></i></a>
                                 <a href="#"><i className="fa fa-pinterest-p"></i></a>
+                                
                             </div>
                             <div className="header__top__right__language">
                                 <img src="img/language.png" alt=""/>
@@ -164,7 +158,7 @@ const Header = () => {
                               <div className="header__top__right__auth d-flex pt-3">
                                 
                                 {
-                                  isAuthenticated ? <div className="header__top__right__language">
+                                  isAuthenticated && (user?.success || user.data?.success) ? <div className="header__top__right__language">
                                   <img style={{width:'30px', height:'30px', borderRadius:'50%'}} src={user?.user?.avatar} alt=""/>
                                   <div>Hi, {user?.user?.firstname} {user?.user?.lastname}</div>
                                   <span className="arrow_carrot-down"></span>

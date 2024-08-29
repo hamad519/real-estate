@@ -15,6 +15,8 @@ import Register from './pages/Register'
 import Login from './components/Login'
 import { useSelector } from 'react-redux';
 import Error from './pages/Error'
+import AddProduct from './pages/admin/AddProduct'
+import ProtectedRoute from './components/protected/ProtectedRoute'
 
 const App = () => {
 
@@ -31,12 +33,12 @@ const App = () => {
         <Route path='/blog-details' element={<BlogDetail/>}/>
         <Route path='/blog' element={<Blog/>}/>
         <Route path='/contact' element={<Contact/>}/>
-        <Route path='/register' element={!isAuthenticated ? <Register/>:<Home/>}/>
+        <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
-        {/* <Route path='/login' element={!isAuthenticated ? <Login/>:<Home/>}/> */}
-        
 
-
+        <Route path='admin' element={<ProtectedRoute/>}>
+          <Route path='add-product' element={<AddProduct/>}/>
+        </Route>
       </Route>
     )
   )

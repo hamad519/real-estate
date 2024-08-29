@@ -21,9 +21,6 @@ export default class AuthController{
                 
                 user.avatar = uploadResult.secure_url;
 
-                console.log("user", user);
-                
-
                 user.password = await bcrypt.hash(user.password, 10);
                 await User.create(user)
                 res.json({
@@ -56,31 +53,28 @@ export default class AuthController{
             username:user.username,
             email:user.email,
             role:user.roles
-        }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+
+console.log("token", token);
 
         try {
-            res.cookie('auth_token',token, { maxAge: 900000, httpOnly: true }).json({
+            res.cookie('token',token, { maxAge: 900000, httpOnly: true }).json({
                 token,
-                user,
-                success:true
             })
         } catch (error) {
             console.log(error);
         }
     }
-    async logout(req, res, next) {
-        console.log('Logout function is called');
-        
+    async logout(req, res, next) {        
         try {
-            res.cookie('auth_token',null, { expiresIn: Date.now() }).json({
+            res.cookie('auth_token','', { maxAge: 0, httpOnly: true }).json({
                 success:true,
                 message:'You are logged out'
             })
         } catch (error) {
             console.log(error);
         }
-    }
-    
+    }  
 }
 
 

@@ -1,19 +1,24 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate   } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRegisterUserMutation } from '../redux/api/authApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfo } from '../redux/features/authSlice';
 
 const RegisterForm = () => {
 
 
-
+    const navigate = useNavigate();
     const [registerUser, { isLoading, error, data }] = useRegisterUserMutation()
-
+    const {isAuthenticated} = useSelector(state=>state.auth)
     const [apiMessage, setApiMessage] = useState(null)
-   
+    
+    useEffect(() => {
+        if(isAuthenticated){
+            navigate('/')
+        }
+    }, [isAuthenticated])
 
     const dispatch = useDispatch()
 
