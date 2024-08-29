@@ -21,9 +21,6 @@ export default class AuthController{
                 
                 user.avatar = uploadResult.secure_url;
 
-                console.log("user", user);
-                
-
                 user.password = await bcrypt.hash(user.password, 10);
                 await User.create(user)
                 res.json({
@@ -56,16 +53,13 @@ export default class AuthController{
             username:user.username,
             email:user.email,
             role:user.roles
-        }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
 
-        
-        
+console.log("token", token);
 
         try {
-            res.cookie('auth_token',token, { maxAge: 900000, httpOnly: true }).json({
+            res.cookie('token',token, { maxAge: 900000, httpOnly: true }).json({
                 token,
-                user,
-                success:true
             })
         } catch (error) {
             console.log(error);
@@ -80,8 +74,7 @@ export default class AuthController{
         } catch (error) {
             console.log(error);
         }
-    }
-    
+    }  
 }
 
 
