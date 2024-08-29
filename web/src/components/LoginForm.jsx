@@ -1,20 +1,28 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useLoginUserMutation } from '../redux/api/authApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfo } from '../redux/features/authSlice';
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
 
 
+    const {isAuthenticated} = useSelector(state=>state.auth)
     const [loginUser, {isLoading, error}] = useLoginUserMutation();
     const dispatch = useDispatch();
     const [apiErr, setApiErr] = useState(null);
-
+    
     const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if(isAuthenticated){
+            navigate('/')
+        }
+    }, [isAuthenticated])
 
     const { handleChange, handleBlur, handleSubmit, handleReset, errors, touched, values } = useFormik({
         initialValues: {
@@ -30,7 +38,7 @@ const LoginForm = () => {
         onSubmit: async values => {
             
             await loginUser(values)
-            // navigate(0)
+            navigate('/')
             
             // handleReset();
         },
