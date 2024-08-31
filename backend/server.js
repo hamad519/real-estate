@@ -7,6 +7,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import productRoutes from './routes/products.routes.js'
 import userRoutes from './routes/user.routes.js'
 import authRoutes from './routes/auth.routes.js'
+import categoryRoutes from './routes/category.routes.js'; // Adjust the path as necessary
 
 import { error } from './middleware/error.js';
 import cors from 'cors'
@@ -36,6 +37,8 @@ app.use(express.urlencoded({limit: '50mb'}));
 app.use('/', productRoutes)
 app.use('/', authRoutes)
 app.use('/', userRoutes)
+app.use('/', categoryRoutes);
+
 
 app.use('*', (req, res, next)=>{
     res.json({

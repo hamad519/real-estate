@@ -27,14 +27,6 @@ const productSchema = new Schema({
         max:[10, 'Please set 10 or less as mx weight'],
         required:[true, 'Please provide the weight']
     },
-    category: {
-        type:String,
-        required:[true, 'Please provide the category'],
-        enum:{
-            values:['Fruits', 'Vegetables', 'Meat', 'Fish', 'Dairy', 'Beverages', 'Bakery', 'Canned', 'Frozen', 'Snacks', 'Others'],
-            message:'Please select the correct category'
-        }
-    },
     ratings: {
         type: Number,
         default: 0,
@@ -76,7 +68,12 @@ const productSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
-      },
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      required: [true, 'Please add a category']
+  },
 },
 {
     timestamps:true

@@ -56,7 +56,8 @@ export default class ProductController{
         const products = await Product.find(query)
             .sort(sortObj)
             .skip(skip)
-            .limit(parseInt(limit));
+            .limit(parseInt(limit))
+            .populate('category');;
             res.json({
                 products       
             })

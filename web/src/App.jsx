@@ -33,7 +33,7 @@ const App = () => {
         <Route path='/blog-details' element={<BlogDetail/>}/>
         <Route path='/blog' element={<Blog/>}/>
         <Route path='/contact' element={<Contact/>}/>
-        <Route path='/register' element={!isAuthenticated ? <Register/>:<Home/>}/>
+        <Route path='/register' element={<Home/>}/>
         {/* <Route path='/login' element={<Login/>}/> */}
         <Route path='/login' element={<Login/>}/>
         
