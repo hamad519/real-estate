@@ -15,6 +15,7 @@ import Register from './pages/Register'
 import Login from './components/Login'
 import { useSelector } from 'react-redux';
 import Error from './pages/Error'
+import ProductListingDemo from './pages/ProductListingDemo'
 
 const App = () => {
 
@@ -25,6 +26,7 @@ const App = () => {
       <Route path='/' element={<Layout/>}>
         <Route path='/' element={<Home/>}/>
         <Route path='/shop' element={<Shop/>}/>
+        <Route path='/demo' element={<ProductListingDemo/>}/>
         <Route path='/shop-details' element={<ShopDetails/>}/>
         <Route path='/cart' element={<ShopCart/>}/>
         <Route path='/check-out' element={<Checkout/>}/>

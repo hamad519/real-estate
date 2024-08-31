@@ -6,22 +6,82 @@ const productSchema = new Schema({
     title: {
         type:String,
         required:[true, 'Please provide the title'],
-        minLength:[5, 'Title must have atleast 5 characters in length'],
+        minLength:[5, 'Title must have at least 5 characters in length'],
         maxLength:[50, 'Title must have less than 50 characters in length'],
         unique:true
     },
+    description: String,
     price: {
         type:Number,
-        min:[100, 'Please set 100 or more as minimum price'],
-        max:[10000, 'Please set 10000 or less as mx price'],
         required:[true, 'Please provide the price']
     },
-    description: String,
+    stock:{
+        type:Number,
+        min:[0, 'Please set 0 or more as minimum stock'],
+        max:[1000, 'Please set 1000 or less as mx stock'],
+        required:[true, 'Please provide the stock']
+    },
+    weight:{
+        type:Number,
+        min:[0, 'Please set 0 or more as minimum weight'],
+        max:[10, 'Please set 10 or less as mx weight'],
+        required:[true, 'Please provide the weight']
+    },
     category: {
         type:String,
-        enum:['Men Fashion', 'Watches', `men's clothing`]
+        required:[true, 'Please provide the category'],
+        enum:{
+            values:['Fruits', 'Vegetables', 'Meat', 'Fish', 'Dairy', 'Beverages', 'Bakery', 'Canned', 'Frozen', 'Snacks', 'Others'],
+            message:'Please select the correct category'
+        }
     },
-})
+    ratings: {
+        type: Number,
+        default: 0,
+      },
+    numReviews: {
+        type: Number,
+        default: 0,
+      },
+    reviews: [
+        {
+          user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+          },
+          rating: {
+            type: Number,
+            required: true,
+          },
+          comment: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
+    images: [
+        {
+          public_id: {
+            type: String,
+            required: true,
+          },
+          url: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+},
+{
+    timestamps:true
+}
+)
 
 
 export const Product = mongoose.model('product', productSchema);

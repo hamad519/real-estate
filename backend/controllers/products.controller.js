@@ -19,9 +19,45 @@ export default class ProductController{
     
     async getAllProducts(req, res, next) {
         try {
-            const products = await Product.find()
+            const { search, sort, category, minPrice, maxPrice, page = 1, limit = 10 } = req.query;
+            // Build the query object
+        let query = {};
+        if (search) {
+            query.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } }
+            ];
+        }
+
+        if (category) {
+            query.category = category;
+        }
+        if (minPrice) {
+            query.price = { ...query.price, $gte: minPrice };
+        }
+        if (maxPrice) {
+            query.price = { ...query.price, $lte: maxPrice };
+        }
+
+        // Build the sort object
+        let sortObj = {};
+        if (sort) {
+            const sortFields = sort.split(',').map(field => field.trim());
+            sortFields.forEach(field => {
+                const [key, order] = field.split(':');
+                sortObj[key] = order === 'desc' ? -1 : 1;
+            });
+        }
+
+        // Pagination
+        const skip = (page - 1) * limit;
+
+        // Execute the query
+        const products = await Product.find(query)
+            .sort(sortObj)
+            .skip(skip)
+            .limit(parseInt(limit));
             res.json({
-                message: "getAllProducts called", 
                 products       
             })
         } catch (error) {
