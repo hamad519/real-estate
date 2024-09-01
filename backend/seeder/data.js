@@ -543,16 +543,18 @@ export const products =  [
 
 export const categories = [
   {
-    name: "66d3822e5d735fe3d18fd3fc",
-    description: "Fresh 66d3822e5d735fe3d18fd3fc",
+    name: "Vegetables",
+    slug:"vegetables",
+    description: "Fresh Vegetables",
     image: {
       public_id: "ecommerce_test/categories/pdbfghvzsgspren4twp1",
       url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725137161/ecommerce_test/categories/pdbfghvzsgspren4twp1.jpg",
     },
   },
   {
-    name: "66d3822e5d735fe3d18fd3fd",
-    description: "Fresh 66d3822e5d735fe3d18fd3fd",
+    name: "Fruits",
+    slug:"fruits",
+    description: "Fresh Fruits",
     image: {
       public_id: "ecommerce_test/categories/agwq4culhnai09cwrs8y",
       url: "https://res.cloudinary.com/variety-stationers-and-sports/image/upload/v1725137160/ecommerce_test/categories/agwq4culhnai09cwrs8y.jpg",
@@ -560,6 +562,7 @@ export const categories = [
   },
   {
     name: "Grocery",
+    slug:"grocery",
     description: "Grocery Items",
     image: {
       public_id: "ecommerce_test/categories/v1oypk58rgbxfsa6edwr",
@@ -568,6 +571,7 @@ export const categories = [
   },
   {
     name: "Bakery",
+    slug:"bakery",
     description: "Fresh Bakery Items",
     image: {
       public_id: "ecommerce_test/categories/r0lwwy30cudq9arcgq5b",
@@ -576,6 +580,7 @@ export const categories = [
   },
   {
     name: "Dairy",
+    slug:"dairy",
     description: "Fresh Dairy Items",
     image: {
       public_id: "ecommerce_test/categories/w3etf2ftiaybrwpwxmzp",
@@ -584,6 +589,7 @@ export const categories = [
   },
   {
     name: "Frozen",
+    slug:"frozen",
     description: "Frozen Items",
     image: {
       public_id: "ecommerce_test/categories/eich6exrdbqtqt4urcmu",
@@ -592,6 +598,7 @@ export const categories = [
   },
   {
     name: "Meat",
+    slug:"meat",
     description: "Fresh Meat Items",
     image: {
       public_id: "ecommerce_test/categories/rmmyk80r4hupj7nzjbqt",
@@ -599,4 +606,7 @@ export const categories = [
   },
   }
 ]
+
+
+
   

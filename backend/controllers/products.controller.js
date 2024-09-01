@@ -19,7 +19,7 @@ export default class ProductController{
     
     async getAllProducts(req, res, next) {
         try {
-            const { search, sort, category, minPrice, maxPrice, page = 1, limit = 10 } = req.query;
+            const { search, sort, minPrice, maxPrice, page = 1, limit = 10 } = req.query;
             // Build the query object
         let query = {};
         if (search) {
@@ -29,9 +29,6 @@ export default class ProductController{
             ];
         }
 
-        if (category) {
-            query.category = category;
-        }
         if (minPrice) {
             query.price = { ...query.price, $gte: minPrice };
         }

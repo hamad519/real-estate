@@ -7,8 +7,8 @@ export const productApi = createApi({
     }),
     endpoints: (builder) => ({
         getAllProducts: builder.query({
-            query: (data) => `products/all?search=${data.search}&sort=${data.sort}&category=${data.category}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}&page=${data.page}&limit=${data.limit}`,
-            
+            query: (data) => `products/all?search=${data.search}&sort=${data.sort}&minPrice=${data.minPrice}&maxPrice=${data.maxPrice}&page=${data.page}&limit=${data.limit}`,
+
         }),
     })
 })

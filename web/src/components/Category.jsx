@@ -33,7 +33,7 @@ const Category = () => {
                 <div key={category._id} className="col-lg-3">
                   <div className="categories__item set-bg" data-setbg={category.image.url}>
                     <img src={category.image.url} alt={category.name}/>
-                    <Link to={`/category/${category._id}`}><h5>{category.name}</h5></Link>
+                    <Link to={`/category/${category.slug}`}><h5>{category.name}</h5></Link>
                   </div>
                 </div>
               ))

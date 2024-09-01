@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { FeaturedProductData } from '../Data/FeaturedProduct'
 import { useGetAllProductsQuery } from '../redux/api/productApi'
 import useDebounce from '../hooks/debounce'
+import { Link } from 'react-router-dom'
 
 const FeaturedProduct = () => {
 
     const [products, setProducts] = useState([]);
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('');
-    const [category, setCategory] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [page, setPage] = useState(1);
@@ -20,7 +20,6 @@ const FeaturedProduct = () => {
     const {data, isLoading, error} = useGetAllProductsQuery({
         search: debouncedSearch,
         sort,
-        category,
         minPrice,
         maxPrice,
         page,
@@ -31,7 +30,7 @@ const FeaturedProduct = () => {
     useEffect(() => {
         if(data)
             setProducts(data.products)
-    }, [data, isLoading, error, debouncedSearch, sort, category, minPrice, maxPrice, page, limit])
+    }, [data, isLoading, error, debouncedSearch, sort, minPrice, maxPrice, page, limit])
 
     return (
         <section className="featured spad">
@@ -62,13 +61,7 @@ const FeaturedProduct = () => {
                 <option value="title:desc">Name: Z to A</option>
             </select>
 
-            {/* Category Filter */}
-            <input
-                type="text"
-                placeholder="Category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-            />
+            
 
             {/* Price Filters */}
             <input
@@ -103,7 +96,7 @@ const FeaturedProduct = () => {
                                                 </ul>
                                             </div>
                                             <div className="featured__item__text">
-                                                <h6><a href="#">{item.title}</a></h6>
+                                                <h6><Link to={`products/${item.slug}`}>{item.title}</Link></h6>
                                                 <h5>{item.price}</h5>
                                             </div>
                                         </div>

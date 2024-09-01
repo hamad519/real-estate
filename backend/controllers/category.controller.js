@@ -4,7 +4,7 @@ import {Category} from '../models/category.js'; // Adjust the path as necessary
 export const createCategory = async (req, res) => {
     try {
         const { name, description, image } = req.body;
-        const category = new Category({ name, description, image });
+        const category = new Category({ name, slug, description, image });
         await category.save();
         res.status(201).json(category);
     } catch (error) {

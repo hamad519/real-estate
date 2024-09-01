@@ -2,7 +2,6 @@ import React from 'react'
 import LatestProdSlider from './LatestProdSlider'
 const Sidebar = () => {
   return (
-    <>
     <div className="sidebar">
                         <div className="sidebar__item">
                             <h4>Department</h4>
@@ -109,7 +108,6 @@ const Sidebar = () => {
                             </div>
                         </div>
                     </div>
-    </>
   )
 }
 

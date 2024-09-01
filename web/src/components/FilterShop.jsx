@@ -1,6 +1,8 @@
 import React from 'react'
 import { filterData } from '../Data/Filter.data'
-const FilterShop = () => {
+const FilterShop = ({products}) => {
+    
+    
   return (
     <>
     <div className="filter__item">
@@ -31,11 +33,11 @@ const FilterShop = () => {
         <div className="row container">
         
         {
-         filterData.map((item,idx)=>{
+         products?.map((item,idx)=>{
            return <div className="col-lg-4 col-12" key={idx}>
              <div className="product__item">
                  <div className="product__item__pic set-bg" data-setbg="img/product/product-1.jpg">
-                 <img src={item.img} alt="" />
+                 <img src={item.images[0].url} alt="" />
                      <ul className="product__item__pic__hover">
                          <li><a href="#"><i className="fa fa-heart"></i></a></li>
                          <li><a href="#"><i className="fa fa-retweet"></i></a></li>

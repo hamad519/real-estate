@@ -10,6 +10,11 @@ const productSchema = new Schema({
         maxLength:[50, 'Title must have less than 50 characters in length'],
         unique:true
     },
+    slug: {
+        type:String,
+        required:[true, 'Please provide the title'],
+        unique:true
+    },
     description: String,
     price: {
         type:Number,
