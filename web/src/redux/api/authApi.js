@@ -35,7 +35,7 @@ export const authApi = createApi({
             })
         }),
         getMe: builder.query({
-            query: () => 'me',
+            query: () => '/me',
             async onQueryStarted(arg, {dispatch,queryFulfilled}) {
                 try {
                     const { data } = await queryFulfilled;

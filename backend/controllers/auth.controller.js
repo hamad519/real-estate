@@ -53,7 +53,7 @@ export default class AuthController{
             username:user.username,
             email:user.email,
             role:user.roles
-        }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+        }, process.env.PRIVATEKEY, { expiresIn: '1h' });
 
 console.log("token", token);
 
